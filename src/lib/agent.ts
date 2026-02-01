@@ -7,6 +7,7 @@ import { http } from "@lucid-agents/http";
 import { payments, paymentsFromEnv } from "@lucid-agents/payments";
 
 import { findConstellation } from "./data";
+import agentRegistration from "../agent-registration.json";
 
 const agent = await createAgent({
   name: process.env.AGENT_NAME ?? "constellation-shapes",
@@ -59,5 +60,8 @@ addEntrypoint({
 
 // Health check endpoint
 app.get("/health", (c) => c.json({ status: "ok", agent: "constellation-shapes" }));
+
+// ERC-8004 registration endpoint
+app.get("/.well-known/agent-registration.json", (c) => c.json(agentRegistration));
 
 export { app };
